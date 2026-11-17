@@ -1,0 +1,253 @@
+ /* ===== Container ===== */
+        .dashboard-container {
+            padding: 30px 60px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* ===== Form Card ===== */
+        .job-form-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .job-form-card form .form-group {
+            margin-bottom: 18px;
+        }
+
+        .job-form-card form label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .job-form-card form input,
+        .job-form-card form select,
+        .job-form-card form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .job-form-card form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-primary {
+            background-color: #0f4c81;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0c3a63;
+        }
+
+        /* Messages */
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            border-left: 4px solid;
+        }
+
+        .message.success { background-color: #d1fae5; color: #065f46; border-color: #10b981; }
+        .message.error { background-color: #fee2e2; color: #991b1b; border-color: #ef4444; }
+        .message.info { background-color: #e0f2fe; color: #0369a1; border-color: #0ea5e9; }
+        .message.warning { background-color: #fef3c7; color: #92400e; border-color: #f59e0b; }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1f2937;
+            padding: 18px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .navbar a.logout-btn {
+            background-color: #ef4444;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .navbar a.logout-btn:hover {
+            background-color: #b91c1c;
+        }
+
+        /* ===== GLOBAL ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    background-color: #1f2937;
+    padding: 18px 60px;
+}
+
+.logo {
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* ===== AUTH LAYOUT ===== */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: calc(100vh - 80px); /* make sure it accounts for navbar */
+    padding-top: 80px;              /* pushes content below navbar */
+}
+
+
+.auth-card {
+    background-color: white;
+    width: 400px;
+    padding: 35px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    margin-top: 10px; /* push it below navbar */
+}
+
+.auth-card h2 {
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* ===== FORM ===== */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #0f4c81;
+}
+
+/* ===== BUTTON ===== */
+.btn-primary {
+    background-color: #0f4c81;
+    color: white;
+    padding: 9px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-primary:hover {
+    background-color: #0c3a63;
+}
+
+.full-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* ===== LINKS ===== */
+.auth-link {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.auth-link a {
+    color: #0f4c81;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+/* ===== MESSAGES ===== */
+.messages {
+    margin-top: 20px;
+}
+
+.message {
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    border-left: 4px solid;
+}
+
+.message.success {
+    background-color: #d1fae5; /* light green */
+    color: #065f46;             /* dark green text */
+    border-color: #10b981;      /* green accent */
+}
+
+.message.error {
+    background-color: #fee2e2; /* light red */
+    color: #991b1b;            /* dark red text */
+    border-color: #ef4444;     /* red accent */
+}
+
+.message.info {
+    background-color: #e0f2fe; /* light blue */
+    color: #0369a1;            /* dark blue text */
+    border-color: #0ea5e9;     /* blue accent */
+}
+
+.message.warning {
+    background-color: #fef3c7; /* light yellow */
+    color: #92400e;            /* dark yellow text */
+    border-color: #f59e0b;     /* yellow accent */
+}

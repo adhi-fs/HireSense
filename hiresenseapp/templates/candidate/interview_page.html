@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireSense | Online Interview</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        /* ===== Navbar ===== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 60px;
+            background-color: #1f2937;
+        }
+
+        .logo {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background-color: #ef4444;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background-color: #dc2626;
+        }
+
+        /* ===== Container ===== */
+        .interview-container {
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        /* ===== Instructions ===== */
+        .instructions {
+            background-color: #eef2ff;
+            border-left: 4px solid #6366f1;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .instructions ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 14px;
+        }
+
+        /* ===== Question Card ===== */
+        .question-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
+            background-color: #fafafa;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .max-score {
+            background-color: #0f4c81;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #d1d5db;
+            resize: vertical;
+            font-size: 14px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #0f4c81;
+        }
+
+        /* ===== Submit Button ===== */
+        .submit-btn {
+            display: block;
+            margin: 30px auto 0;
+            background-color: #0f4c81;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #0c3a63;
+        }
+
+        /* ===== No Questions ===== */
+        .no-questions {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">HireSense</div>
+        <a href="{% url 'logout_f' %}" class="logout-btn">Logout</a>
+    </nav>
+
+    <!-- Interview Container -->
+    <div class="interview-container">
+
+        <h2>Online Interview</h2>
+        <p class="subtitle">Please complete all questions carefully before submission.</p>
+
+        <div class="instructions">
+            <strong>Instructions:</strong>
+            <ul>
+                <li>Answer all questions clearly and professionally.</li>
+                <li>Your responses will be evaluated by the employer.</li>
+                <li>Do not refresh or close the page during the interview.</li>
+            </ul>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="question-card">
+                <div class="question-header">
+                    <strong>Question {{ current_index }} of {{ total_questions }}</strong>
+                    <span class="max-score">Max Score: {{ question.max_score }}</span>
+                </div>
+                <p>{{ question.question_text }}</p>
+                <textarea name="answer_{{ question.id }}" rows="4" placeholder="Type your answer here..."
+                    required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                {% if is_last %}Submit{% else %}Next Question{% endif %}
+            </button>
+        </form>
+
+
+    </div>
+
+</body>
+
+</html>

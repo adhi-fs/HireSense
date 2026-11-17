@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HireSense | Mock Interview</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .sidebar {
+            height: 100vh;
+            background: #111827;
+            padding-top: 20px;
+            position: fixed;
+            width: 240px;
+        }
+
+        .sidebar h4 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #cbd5e1;
+            padding: 12px 20px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #1f2937;
+            color: #fff;
+            border-left: 4px solid #0d6efd;
+        }
+
+        .main-content {
+            margin-left: 240px;
+            padding: 30px;
+        }
+
+        .card {
+            border-radius: 12px;
+        }
+
+        .action-btns .btn {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h4>HireSense Admin</h4>
+        <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        <a href="{% url 'admin_users' %}">Users</a>
+        <a href="{% url 'admin_jobs' %}">Jobs</a>
+        <a href="{% url 'admin_job_applications' %}">Applications</a>
+        <a href="{% url 'admin_interview_sessions' %}">Interviews</a>
+        <a href="{% url 'admin_mock_questions' %}" class="active">Mock Interview</a>
+        <a href="{% url 'admin_mock_results' %}">Mock Results</a>
+        <a href="{% url 'logout_f' %}">Logout</a>
+    </div>
+
+    <div class="main-content">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Mock Interview Questions</h2>
+            <span class="text-muted">Manage interview logic</span>
+        </div>
+
+        <!-- Add Question Form -->
+        <div class="card shadow mb-4">
+            <div class="card-header bg-primary text-white">
+                Add New Question
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Job Role</label>
+                            <input type="text" name="job_role" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Difficulty</label>
+                            <select name="difficulty" class="form-select" required>
+                                <option value="">-- Select Difficulty --</option>
+                                <option value="Easy">Easy</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Hard">Hard</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Company</label>
+                            <input type="text" name="company" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Question</label>
+                        <textarea name="question" class="form-control" required></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Keywords (comma separated)</label>
+                            <input type="text" name="keywords" class="form-control" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">Max Score</label>
+                            <input type="number" name="max_score" value="10" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Save Question</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Question List -->
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                Existing Questions
+            </div>
+
+            <div class="card-body table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Question</th>
+                            <th>Keywords</th>
+                            <th>Max Score</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for q in questions %}
+                        <tr>
+                            <td>{{ q.id }}</td>
+                            <td>{{ q.question_text }}</td>
+                            <td>{{ q.keywords }}</td>
+                            <td><span class="badge bg-info">{{ q.max_score }}</span></td>
+                            <td class="action-btns">
+                                <!-- Edit Button triggers a modal -->
+                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal{{ q.id }}">
+                                    Edit
+                                </button>
+
+                                <!-- Delete Button -->
+                                <a href="{% url 'delete_mock_question' q.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this question?');">
+                                    Delete
+                                </a>
+
+                                <!-- Edit Modal -->
+                                <div class="modal fade" id="editModal{{ q.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ q.id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel{{ q.id }}">Edit Question #{{ q.id }}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="POST" action="{% url 'edit_mock_question' q.id %}">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                        <div class="col-md-4 mb-3">
+                                                            <label class="form-label">Job Role</label>
+                                                            <input type="text" name="job_role" class="form-control" value="{{ q.job_role }}" required>
+                                                        </div>
+                                                        <div class="col-md-4 mb-3">
+                                                            <label class="form-label">Difficulty</label>
+                                                            <select name="difficulty" class="form-select" required>
+                                                                <option value="Easy" {% if q.difficulty == "Easy" %}selected{% endif %}>Easy</option>
+                                                                <option value="Medium" {% if q.difficulty == "Medium" %}selected{% endif %}>Medium</option>
+                                                                <option value="Hard" {% if q.difficulty == "Hard" %}selected{% endif %}>Hard</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4 mb-3">
+                                                            <label class="form-label">Company</label>
+                                                            <input type="text" name="company" class="form-control" value="{{ q.company }}" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Question</label>
+                                                        <textarea name="question" class="form-control" required>{{ q.question_text }}</textarea>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label">Keywords</label>
+                                                            <input type="text" name="keywords" class="form-control" value="{{ q.keywords }}" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label class="form-label">Max Score</label>
+                                                            <input type="number" name="max_score" class="form-control" value="{{ q.max_score }}" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-success">Update Question</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Edit Modal -->
+
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">No questions added</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

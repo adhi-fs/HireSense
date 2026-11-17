@@ -1,0 +1,642 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HireSense | Candidate Dashboard</title>
+
+    <link rel="stylesheet" href="{% static 'styles/candidate_dashboard.css' %}">
+</head>
+
+<body>
+
+<!-- ==========================================
+     NAVBAR
+========================================== -->
+
+<nav class="navbar">
+
+    <a href="{% url 'home_p' %}" class="brand">
+        Hire<span>Sense</span>
+    </a>
+
+    <div class="nav-right">
+        <div class="welcome-text">
+            Candidate Portal
+        </div>
+
+        <a href="{% url 'logout_f' %}" class="logout-btn">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<!-- ==========================================
+     MAIN DASHBOARD
+========================================== -->
+
+<main class="dashboard-container">
+
+    <!-- HEADER -->
+
+    <div class="dashboard-header">
+
+        <div>
+            <span class="eyebrow">CANDIDATE PORTAL</span>
+
+            <h1>Candidate Dashboard</h1>
+
+            <p>
+                Explore opportunities, track your applications and prepare
+                for your next interview.
+            </p>
+        </div>
+
+        <div class="header-badge">
+            <span class="status-dot"></span>
+            Profile Active
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         DASHBOARD TABS
+    ========================================== -->
+
+    <div class="tabs">
+
+        <button class="tab active" data-tab="jobs">
+            <span class="tab-icon">⌕</span>
+            Job Openings
+        </button>
+
+        <button class="tab" data-tab="applications">
+            <span class="tab-icon">▤</span>
+            My Applications
+        </button>
+
+        <button class="tab" data-tab="mock">
+            <span class="tab-icon">◉</span>
+            Mock Interview
+        </button>
+
+    </div>
+
+
+    <!-- ==========================================
+         JOB OPENINGS
+    ========================================== -->
+
+    <div class="tab-content active" id="jobs">
+
+        {% for job in jobs %}
+
+        <div class="job-card">
+
+            <div class="job-top">
+
+                <div>
+
+                    <div class="company-label">
+                        HIRE WITH HIRESENSE
+                    </div>
+
+                    <h2>{{ job.job_title }}</h2>
+
+                    <div class="job-meta">
+
+                        <span>
+                            💼 {{ job.job_role }}
+                        </span>
+
+                        <span>
+                            📍 {{ job.job_location }}
+                        </span>
+
+                        <span>
+                            💰 ₹{{ job.job_salary }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                {% if job.id in applied_jobs_id %}
+                    <span class="status-badge applied">
+                        Applied
+                    </span>
+                {% else %}
+                    <span class="status-badge open">
+                        Open
+                    </span>
+                {% endif %}
+
+            </div>
+
+
+            <div class="job-description">
+
+                <h4>Job Description</h4>
+
+                <p>
+                    {{ job.job_description }}
+                </p>
+
+            </div>
+
+
+            {% if job.id in applied_jobs_id %}
+
+                <div class="already-applied">
+
+                    <span class="check-icon">✓</span>
+
+                    <div>
+                        <strong>Application submitted</strong>
+                        <p>You have already applied for this position.</p>
+                    </div>
+
+                </div>
+
+            {% else %}
+
+                <div class="application-section">
+
+                    <div class="section-heading">
+
+                        <div>
+                            <h3>Apply for this position</h3>
+
+                            <p>
+                                Submit your resume and cover letter to apply.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <form method="POST"
+                          action="{% url 'apply_now_f' job.id %}"
+                          enctype="multipart/form-data">
+
+                        {% csrf_token %}
+
+
+                        <div class="form-grid">
+
+                            <!-- RESUME -->
+
+                            <div class="form-group">
+
+                                <label>
+                                    Resume
+                                </label>
+
+                                <div class="file-input">
+
+                                    <input
+                                        type="file"
+                                        name="resume"
+                                        accept=".pdf"
+                                        required
+                                    >
+
+                                </div>
+
+                                <small>
+                                    PDF only
+                                </small>
+
+                            </div>
+
+
+                            <!-- COVER LETTER -->
+
+                            <div class="form-group">
+
+                                <label>
+                                    Cover Letter
+                                </label>
+
+                                <div class="file-input">
+
+                                    <input
+                                        type="file"
+                                        name="cover_letter"
+                                        accept=".pdf"
+                                        required
+                                    >
+
+                                </div>
+
+                                <small>
+                                    PDF only
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- DETAILS -->
+
+                        <div class="form-group">
+
+                            <label>
+                                Why should we hire you?
+                            </label>
+
+                            <textarea
+                                name="details"
+                                placeholder="Briefly tell the employer why you are a good fit for this role..."
+                                required></textarea>
+
+                        </div>
+
+
+                        <button type="submit" class="primary-btn">
+                            Submit Application
+                            <span>→</span>
+                        </button>
+
+                    </form>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        {% empty %}
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                ⌕
+            </div>
+
+            <h3>No job openings available</h3>
+
+            <p>
+                There are currently no active opportunities.
+                Please check again later.
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+
+    <!-- ==========================================
+         MY APPLICATIONS
+    ========================================== -->
+
+    <div class="tab-content" id="applications">
+
+        {% if applications %}
+
+            <div class="applications-list">
+
+                {% for app in applications %}
+
+                <div class="application-card">
+
+                    <div class="application-main">
+
+                        <div>
+
+                            <span class="company-label">
+                                APPLICATION
+                            </span>
+
+                            <h3>
+                                {{ app.job.job_title }}
+                            </h3>
+
+                            <p class="application-date">
+                                Applied on
+                                {{ app.applied_at|date:"M d, Y" }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="application-status">
+
+                            {% if app.status == "pending" %}
+
+                                <span class="status-badge pending">
+                                    Pending Review
+                                </span>
+
+                            {% elif app.status == "reviewed" %}
+
+                                <span class="status-badge reviewed">
+                                    Reviewed
+                                </span>
+
+                            {% elif app.status == "shortlisted" %}
+
+                                <span class="status-badge shortlisted">
+                                    Shortlisted
+                                </span>
+
+                            {% elif app.status == "rejected" %}
+
+                                <span class="status-badge rejected">
+                                    Rejected
+                                </span>
+
+                            {% elif app.status == "selected" %}
+
+                                <span class="status-badge selected">
+                                    Selected
+                                </span>
+
+                            {% elif app.status == "cancelled" %}
+
+                                <span class="status-badge cancelled">
+                                    Cancelled
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    {% if app.job.job_status == "closed" %}
+
+                        <div class="warning-box">
+
+                            ⚠
+                            <span>
+                                This job has been closed or deleted by the employer.
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if app.interview_assigned and app.job.job_status == "open" and app.session_exists %}
+
+                        <div class="interview-action">
+
+                            <div>
+
+                                <strong>Online interview ready</strong>
+
+                                <p>
+                                    Your interview session is available.
+                                </p>
+
+                            </div>
+
+                            <a href="{% url 'start_online_interview' app.id %}"
+                               class="primary-btn small">
+                                Start Interview →
+                            </a>
+
+                        </div>
+
+                    {% elif app.job.job_status == "closed" %}
+
+                        <div class="cancelled-interview">
+                            Interview cancelled because the job was closed.
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    ▤
+                </div>
+
+                <h3>No applications yet</h3>
+
+                <p>
+                    Once you apply for a position, your application status
+                    will appear here.
+                </p>
+
+                <button class="secondary-btn"
+                        onclick="switchTab('jobs')">
+                    Browse Jobs
+                </button>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- ==========================================
+         MOCK INTERVIEW
+    ========================================== -->
+
+    <div class="tab-content" id="mock">
+
+        <div class="mock-container">
+
+            <div class="mock-intro">
+
+                <div class="mock-icon">
+                    ◉
+                </div>
+
+                <div>
+
+                    <span class="eyebrow">
+                        INTERVIEW PREPARATION
+                    </span>
+
+                    <h2>Practice before the real interview.</h2>
+
+                    <p>
+                        Choose a role, difficulty level and company to
+                        start a mock interview session.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="mock-card">
+
+                <form method="POST"
+                      action="{% url 'start_mock_interview' %}">
+
+                    {% csrf_token %}
+
+
+                    <div class="form-grid three">
+
+                        <!-- ROLE -->
+
+                        <div class="form-group">
+
+                            <label>
+                                Job Role
+                            </label>
+
+                            <select name="job_role" required>
+
+                                <option value="">
+                                    Select Role
+                                </option>
+
+                                {% for role in roles %}
+
+                                <option value="{{ role }}">
+                                    {{ role }}
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- DIFFICULTY -->
+
+                        <div class="form-group">
+
+                            <label>
+                                Difficulty
+                            </label>
+
+                            <select name="difficulty" required>
+
+                                <option value="">
+                                    Select Difficulty
+                                </option>
+
+                                {% for difficulty in difficulties %}
+
+                                <option value="{{ difficulty }}">
+                                    {{ difficulty }}
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- COMPANY -->
+
+                        <div class="form-group">
+
+                            <label>
+                                Company
+                            </label>
+
+                            <select name="company" required>
+
+                                <option value="">
+                                    Select Company
+                                </option>
+
+                                {% for company in companies %}
+
+                                <option value="{{ company }}">
+                                    {{ company }}
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <button type="submit" class="primary-btn">
+                        Start Mock Interview
+                        <span>→</span>
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<script>
+
+    const tabs = document.querySelectorAll(".tab");
+    const contents = document.querySelectorAll(".tab-content");
+
+    function switchTab(target) {
+
+        tabs.forEach(tab => {
+            tab.classList.remove("active");
+
+            if (tab.dataset.tab === target) {
+                tab.classList.add("active");
+            }
+        });
+
+        contents.forEach(content => {
+            content.classList.remove("active");
+        });
+
+        const selectedContent = document.getElementById(target);
+
+        if (selectedContent) {
+            selectedContent.classList.add("active");
+        }
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
+    tabs.forEach(tab => {
+
+        tab.addEventListener("click", () => {
+
+            switchTab(tab.dataset.tab);
+
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

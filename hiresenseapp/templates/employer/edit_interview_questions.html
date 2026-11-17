@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Interview Question</title>
+    <style>
+        /* ===== GLOBAL ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 60px;
+            background-color: #1f2937;
+        }
+
+        .logo {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background-color: #ef4444;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* ===== AUTH LAYOUT ===== */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: calc(100vh - 80px);
+            padding-top: 80px;
+        }
+
+        .auth-card {
+            background-color: white;
+            width: 500px;
+            padding: 35px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            margin-top: 10px;
+        }
+
+        .auth-card h2 {
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* ===== FORM ===== */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0f4c81;
+        }
+
+        /* ===== BUTTON ===== */
+        .btn-primary {
+            background-color: #0f4c81;
+            color: white;
+            padding: 9px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0c3a63;
+        }
+
+        .full-btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* ===== MESSAGES ===== */
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            border-left: 4px solid;
+        }
+
+        .message.success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border-color: #10b981;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">HireSense</div>
+        <a href="#" class="logout-btn">Logout</a>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Edit Question for "Frontend Developer"</h2>
+
+            <!-- Example Success Message -->
+            <div class="messages">
+                <div class="message success">Question updated successfully!</div>
+            </div>
+
+            <!-- Edit Question Form -->
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="question_text">Question</label>
+                    <textarea id="question_text" name="question_text" rows="3" required>{{ question.question_text }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="keywords">Keywords (comma separated)</label>
+                    <input type="text" id="keywords" name="keywords" value="{{ question.keywords }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="max_score">Maximum Score</label>
+                    <input type="number" id="max_score" name="max_score" value="{{ question.max_score }}" required>
+                </div>
+
+                <button type="submit" class="btn-primary full-btn">Update Question</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

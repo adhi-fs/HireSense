@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireSense | Add Job Vacancy</title>
+    <link rel="stylesheet" href="{% static 'styles/addjob.css' %}">
+    <style>
+       
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">HireSense</div>
+        <a href="{% url 'logout_f' %}" class="logout-btn">Logout</a>
+    </nav>
+
+    <div class="dashboard-container">
+        <h2>Add New Job Vacancy</h2>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="job-form-card">
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label>Job Title</label>
+                    <input type="text" name="job_title" placeholder="Enter Job Title" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Job Role</label>
+                    <input type="text" name="job_role" placeholder="Enter Role" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="job_location" placeholder="Enter Location" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Salary</label>
+                    <input type="text" name="job_salary" placeholder="Enter Salary" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="job_description" placeholder="Job Description" required></textarea>
+                </div>
+
+               
+
+                <button type="submit" class="btn-primary">Add Job</button>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>

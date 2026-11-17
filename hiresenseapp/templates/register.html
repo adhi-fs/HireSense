@@ -1,0 +1,263 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HireSense | Create Account</title>
+
+    <link rel="stylesheet" href="{% static 'styles/login.css' %}">
+</head>
+
+<body>
+
+<div class="auth-page">
+
+    <!-- LEFT BRANDING -->
+    <div class="auth-brand">
+
+        <div class="brand-content">
+
+            <div class="logo">
+                Hire<span>Sense</span>
+            </div>
+
+            <div class="brand-line"></div>
+
+            <h1>Start your hiring journey.</h1>
+
+            <p>
+                Create your HireSense account and connect with
+                opportunities, candidates and smarter recruitment tools.
+            </p>
+
+            <div class="feature">
+                <span>✓</span>
+                <p>Create your professional profile</p>
+            </div>
+
+            <div class="feature">
+                <span>✓</span>
+                <p>Apply for relevant opportunities</p>
+            </div>
+
+            <div class="feature">
+                <span>✓</span>
+                <p>Track your recruitment journey</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SIGNUP SECTION -->
+    <div class="auth-section">
+
+        <div class="auth-card">
+
+            <div class="mobile-logo">
+                Hire<span>Sense</span>
+            </div>
+
+            <div class="auth-header">
+
+                <div class="welcome-icon">
+                    ✨
+                </div>
+
+                <h2>Create your account</h2>
+
+                <p>
+                    Join HireSense and get started today.
+                </p>
+
+            </div>
+
+
+            {% if messages %}
+                <div class="messages">
+
+                    {% for message in messages %}
+
+                        <div class="message">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+            {% endif %}
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- FULL NAME -->
+
+                <div class="form-group">
+
+                    <label for="fullname">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullname"
+                        name="fullname"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Choose a username"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create a password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="cpassword">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="cpassword"
+                        name="cpassword"
+                        placeholder="Confirm your password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ROLE -->
+
+                <div class="form-group">
+
+                    <label for="role">
+                        Account Type
+                    </label>
+
+                    <select
+                        id="role"
+                        name="role"
+                        required
+                    >
+
+                        <option value="" disabled selected>
+                            Select account type
+                        </option>
+
+                        <option value="candidate">
+                            Candidate
+                        </option>
+
+                        <option value="employer">
+                            Employer
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button type="submit" class="auth-btn">
+
+                    Create Account
+
+                    <span>→</span>
+
+                </button>
+
+            </form>
+
+
+            <div class="divider">
+                <span>Already have an account?</span>
+            </div>
+
+
+            <a href="{% url 'login_f' %}" class="signup-btn">
+                Sign in instead
+            </a>
+
+
+            <div class="back-home">
+
+                <a href="{% url 'home_p' %}">
+                    ← Back to HireSense
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

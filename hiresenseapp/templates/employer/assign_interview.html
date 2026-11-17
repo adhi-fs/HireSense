@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Assign Interview - {{ job.job_title }}</title>
+    <link rel="stylesheet" href="{% static 'styles/assign_interview.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">HireSense</div>
+        <a href="{% url 'logout_f' %}" class="logout-btn">Logout</a>
+    </nav>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Assign Interview - "{{ job.job_title }}"</h2>
+
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if candidates %}
+            {% for candidate in candidates %}
+            <div class="candidate-card">
+                <span>{{ candidate.username }} ({{ candidate.email }})</span>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="candidate_id" value="{{ candidate.id }}">
+                    <button type="submit" class="btn-primary">Assign Interview</button>
+                </form>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No candidates available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+
+</html>

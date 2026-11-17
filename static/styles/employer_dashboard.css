@@ -1,0 +1,977 @@
+/* =========================================================
+   HIRE SENSE - EMPLOYER DASHBOARD
+   Clean SaaS / Recruiter Dashboard Theme
+========================================================= */
+
+
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f8fafc;
+    color: #0f172a;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 60px;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border-bottom: 1px solid #e2e8f0;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 1000;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+
+/* Logo */
+
+.brand {
+    text-decoration: none;
+
+    font-size: 24px;
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+
+    color: #0f172a;
+}
+
+.brand span {
+    color: #4f46e5;
+}
+
+
+/* Right side */
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.role-label {
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #64748b;
+
+    padding-right: 5px;
+}
+
+
+/* Logout */
+
+.logout-btn {
+    text-decoration: none;
+
+    background: #ffffff;
+
+    color: #dc2626;
+
+    border: 1px solid #fecaca;
+
+    padding: 9px 17px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+    background: #fef2f2;
+
+    border-color: #fca5a5;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.dashboard-container {
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 45px 60px 70px;
+}
+
+
+/* =========================================================
+   DASHBOARD HEADER
+========================================================= */
+
+.dashboard-header {
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-bottom: 30px;
+}
+
+
+/* Small heading */
+
+.eyebrow {
+    display: block;
+
+    color: #4f46e5;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.2px;
+
+    margin-bottom: 8px;
+}
+
+
+/* Main heading */
+
+.dashboard-header h1 {
+    font-size: 32px;
+
+    line-height: 1.2;
+
+    font-weight: 750;
+
+    letter-spacing: -0.8px;
+
+    color: #0f172a;
+
+    margin-bottom: 9px;
+}
+
+.dashboard-header p {
+    color: #64748b;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    max-width: 600px;
+}
+
+
+/* =========================================================
+   ADD JOB BUTTON
+========================================================= */
+
+.add-job-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    background: #4f46e5;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 11px 19px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    box-shadow: 0 5px 15px rgba(79, 70, 229, 0.18);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.add-job-btn span {
+    font-size: 19px;
+
+    line-height: 1;
+}
+
+.add-job-btn:hover {
+    background: #4338ca;
+
+    color: white;
+
+    text-decoration: none;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 22px rgba(79, 70, 229, 0.25);
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 30px;
+}
+
+
+/* Individual stat card */
+
+.stat-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    min-height: 125px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 13px;
+
+    padding: 22px;
+
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+
+/* Icon */
+
+.stat-icon {
+    width: 46px;
+
+    height: 46px;
+
+    min-width: 46px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    font-size: 18px;
+
+    font-weight: 800;
+}
+
+
+/* Icon variations */
+
+.stat-icon.blue {
+    background: #eef2ff;
+
+    color: #4f46e5;
+}
+
+.stat-icon.purple {
+    background: #f3e8ff;
+
+    color: #9333ea;
+}
+
+.stat-icon.green {
+    background: #ecfdf5;
+
+    color: #059669;
+}
+
+.stat-icon.orange {
+    background: #fff7ed;
+
+    color: #ea580c;
+}
+
+
+/* Text */
+
+.stat-info p {
+    color: #64748b;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-bottom: 5px;
+}
+
+.stat-info h2 {
+    color: #0f172a;
+
+    font-size: 29px;
+
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   MAIN DASHBOARD CARD
+========================================================= */
+
+.dashboard-card {
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+
+    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.tabs {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 7px;
+
+    background: #f8fafc;
+
+    border-bottom: 1px solid #e2e8f0;
+
+    overflow-x: auto;
+}
+
+.tab {
+    border: none;
+
+    background: transparent;
+
+    color: #64748b;
+
+    padding: 11px 18px;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.tab:hover {
+    background: #eef2ff;
+
+    color: #4f46e5;
+}
+
+.tab.active {
+    background: #4f46e5;
+
+    color: white;
+
+    box-shadow: 0 3px 8px rgba(79, 70, 229, 0.18);
+}
+
+
+/* =========================================================
+   TAB CONTENT
+========================================================= */
+
+.tab-content {
+    display: none;
+
+    padding: 25px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    min-width: 720px;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    background: #ffffff;
+}
+
+
+/* Table header */
+
+thead th {
+    background: #f8fafc;
+
+    color: #64748b;
+
+    border-bottom: 1px solid #e2e8f0;
+
+    padding: 13px 16px;
+
+    text-align: left;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.6px;
+}
+
+
+/* Table cells */
+
+tbody td {
+    padding: 17px 16px;
+
+    color: #475569;
+
+    border-bottom: 1px solid #f1f5f9;
+
+    font-size: 13px;
+
+    vertical-align: middle;
+}
+
+
+/* Remove last border */
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* Hover */
+
+tbody tr {
+    transition: background 0.15s ease;
+}
+
+tbody tr:hover {
+    background: #fafbff;
+}
+
+
+/* Job title */
+
+.job-title {
+    color: #0f172a;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+/* Location */
+
+.location {
+    color: #64748b;
+}
+
+
+/* =========================================================
+   CANDIDATE INFO
+========================================================= */
+
+.candidate-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    color: #0f172a;
+
+    font-weight: 650;
+}
+
+
+/* Candidate avatar */
+
+.candidate-avatar {
+    width: 34px;
+
+    height: 34px;
+
+    min-width: 34px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+
+/* Avatar variations */
+
+.shortlisted-avatar {
+    background: #ecfdf5;
+
+    color: #059669;
+}
+
+.selected-avatar {
+    background: #fff7ed;
+
+    color: #ea580c;
+}
+
+.rejected-avatar {
+    background: #fef2f2;
+
+    color: #dc2626;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.status-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    white-space: nowrap;
+}
+
+
+/* Open */
+
+.status-open {
+    background: #ecfdf5;
+
+    color: #047857;
+}
+
+
+/* Closed */
+
+.status-closed {
+    background: #fef2f2;
+
+    color: #b91c1c;
+}
+
+
+/* Interview assigned */
+
+.status-assigned {
+    background: #eef2ff;
+
+    color: #4338ca;
+}
+
+
+/* =========================================================
+   ACTION LINKS
+========================================================= */
+
+.action-links {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+.action-links a {
+    color: #4f46e5;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+.action-links a:hover {
+    text-decoration: underline;
+}
+
+.action-links .delete-link {
+    color: #dc2626;
+}
+
+
+/* =========================================================
+   TABLE BUTTON
+========================================================= */
+
+.table-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #4f46e5;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 8px 12px;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    transition: background 0.2s ease;
+}
+
+.table-btn:hover {
+    background: #4338ca;
+
+    color: white;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   RESUME LINK
+========================================================= */
+
+.resume-link {
+    color: #4f46e5;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 750;
+}
+
+.resume-link:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   EMPTY STATES
+========================================================= */
+
+.empty-state {
+    text-align: center;
+
+    padding: 65px 20px;
+
+    color: #64748b;
+}
+
+.empty-icon {
+    width: 52px;
+
+    height: 52px;
+
+    margin: 0 auto 17px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 20px;
+
+    font-weight: 800;
+}
+
+.empty-state h3 {
+    color: #0f172a;
+
+    font-size: 16px;
+
+    margin-bottom: 7px;
+}
+
+.empty-state p {
+    color: #64748b;
+
+    font-size: 13px;
+
+    margin-bottom: 20px;
+}
+
+
+/* Empty-state button */
+
+.empty-action {
+    display: inline-block;
+
+    background: #4f46e5;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 9px 15px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+.empty-action:hover {
+    background: #4338ca;
+
+    color: white;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .navbar {
+        padding: 0 30px;
+    }
+
+    .dashboard-container {
+        padding: 35px 30px 60px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .navbar {
+        height: auto;
+
+        min-height: 70px;
+
+        padding: 15px 20px;
+    }
+
+    .brand {
+        font-size: 21px;
+    }
+
+    .role-label {
+        display: none;
+    }
+
+    .dashboard-container {
+        padding: 28px 18px 50px;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        margin-bottom: 25px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 27px;
+    }
+
+    .dashboard-header p {
+        font-size: 14px;
+    }
+
+    .add-job-btn {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .stat-card {
+        min-height: 105px;
+    }
+
+    .tabs {
+        padding: 6px;
+
+        gap: 3px;
+    }
+
+    .tab {
+        padding: 10px 13px;
+
+        font-size: 12px;
+    }
+
+    .tab-content {
+        padding: 15px;
+    }
+
+    table {
+        min-width: 680px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+    .logout-btn {
+        padding: 8px 12px;
+
+        font-size: 12px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 24px;
+    }
+
+    .stat-card {
+        padding: 17px;
+    }
+
+    .stat-icon {
+        width: 42px;
+
+        height: 42px;
+
+        min-width: 42px;
+    }
+
+    .stat-info h2 {
+        font-size: 26px;
+    }
+
+}

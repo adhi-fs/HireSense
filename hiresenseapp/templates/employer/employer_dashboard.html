@@ -1,0 +1,688 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HireSense | Employer Dashboard</title>
+
+    <link rel="stylesheet" href="{% static 'styles/employer_dashboard.css' %}">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a href="#" class="brand">
+            Hire<span>Sense</span>
+        </a>
+
+        <div class="nav-right">
+            <span class="role-label">Employer</span>
+
+            <a href="{% url 'logout_f' %}" class="logout-btn">
+                Logout
+            </a>
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN CONTAINER ================= -->
+
+    <main class="dashboard-container">
+
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="dashboard-header">
+
+            <div>
+                <span class="eyebrow">EMPLOYER PORTAL</span>
+
+                <h1>Employer Dashboard</h1>
+
+                <p>
+                    Manage your vacancies, applications and candidates
+                    from one place.
+                </p>
+            </div>
+
+            <a href="{% url 'add_job_f' %}" class="add-job-btn">
+                <span>+</span>
+                Add New Vacancy
+            </a>
+
+        </div>
+
+
+        <!-- ================= DASHBOARD STATISTICS ================= -->
+
+        <div class="stats-grid">
+
+            <!-- Active Jobs -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    <span>▣</span>
+                </div>
+
+                <div class="stat-info">
+
+                    <p>Active Jobs</p>
+
+                    <h2>{{ active_jobs_count }}</h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- Applications -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    <span>◉</span>
+                </div>
+
+                <div class="stat-info">
+
+                    <p>Applications</p>
+
+                    <h2>{{ applications_count }}</h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- Interviews -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    <span>✓</span>
+                </div>
+
+                <div class="stat-info">
+
+                    <p>Interviews</p>
+
+                    <h2>{{ interviews_count }}</h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- Selected -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon orange">
+                    <span>★</span>
+                </div>
+
+                <div class="stat-info">
+
+                    <p>Selected</p>
+
+                    <h2>{{ selected_count }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= TABS ================= -->
+
+        <div class="dashboard-card">
+
+            <div class="tabs">
+
+                <button class="tab active" data-tab="jobs">
+                    My Jobs
+                </button>
+
+                <button class="tab" data-tab="pending">
+                    Pending
+                </button>
+
+                <button class="tab" data-tab="shortlisted">
+                    Shortlisted
+                </button>
+
+                <button class="tab" data-tab="selected">
+                    Selected
+                </button>
+
+                <button class="tab" data-tab="rejected">
+                    Rejected
+                </button>
+
+            </div>
+
+
+            <!-- ================= JOBS TAB ================= -->
+
+            <div class="tab-content active" id="jobs">
+
+                {% if jobs %}
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Job Title</th>
+                                <th>Role</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for job in jobs %}
+
+                            <tr>
+
+                                <td>
+                                    <div class="job-title">
+                                        {{ job.job_title }}
+                                    </div>
+                                </td>
+
+                                <td>
+                                    {{ job.job_role }}
+                                </td>
+
+                                <td>
+                                    <span class="location">
+                                        {{ job.job_location }}
+                                    </span>
+                                </td>
+
+                                <td>
+
+                                    {% if job.job_status == "open" %}
+
+                                    <span class="status-badge status-open">
+                                        Open
+                                    </span>
+
+                                    {% else %}
+
+                                    <span class="status-badge status-closed">
+                                        {{ job.job_status }}
+                                    </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+
+                                    <div class="action-links">
+
+                                        <a href="{% url 'edit_job_f' job.id %}">
+                                            Edit
+                                        </a>
+
+                                        <a href="{% url 'delete_job_f' job.id %}"
+                                           class="delete-link">
+                                            Delete
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        +
+                    </div>
+
+                    <h3>No jobs posted yet</h3>
+
+                    <p>
+                        Create your first vacancy and start finding candidates.
+                    </p>
+
+                    <a href="{% url 'add_job_f' %}" class="empty-action">
+                        Add Your First Vacancy
+                    </a>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ================= PENDING TAB ================= -->
+
+            <div class="tab-content" id="pending">
+
+                {% if candidate_applications %}
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Candidate</th>
+                                <th>Job</th>
+                                <th>Applied On</th>
+                                <th>Email</th>
+                                <th>Interview</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for app in candidate_applications %}
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="candidate-info">
+
+                                        <div class="candidate-avatar">
+                                            {{ app.candidate.username|first|upper }}
+                                        </div>
+
+                                        <span>
+                                            {{ app.candidate.username }}
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+                                <td>
+                                    {{ app.job.job_title }}
+                                </td>
+
+                                <td>
+                                    {{ app.applied_at|date:"M d, Y" }}
+                                </td>
+
+                                <td>
+                                    {{ app.candidate.email }}
+                                </td>
+
+                                <td>
+
+                                    {% if app.job.job_status != "open" %}
+
+                                    <span class="status-badge status-closed">
+                                        Job Closed
+                                    </span>
+
+                                    {% elif app.interview_assigned %}
+
+                                    <span class="status-badge status-assigned">
+                                        ✓ Interview Assigned
+                                    </span>
+
+                                    {% else %}
+
+                                    <a href="{% url 'add_interview_questions' app.job.id %}"
+                                       class="table-btn">
+                                        Assign Interview
+                                    </a>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ✓
+                    </div>
+
+                    <h3>No pending applications</h3>
+
+                    <p>
+                        New candidate applications will appear here.
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ================= SHORTLISTED TAB ================= -->
+
+            <div class="tab-content" id="shortlisted">
+
+                {% if approved_requests %}
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Candidate</th>
+                                <th>Email</th>
+                                <th>Job</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for req in approved_requests %}
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="candidate-info">
+
+                                        <div class="candidate-avatar shortlisted-avatar">
+                                            {{ req.candidate.username|first|upper }}
+                                        </div>
+
+                                        <span>
+                                            {{ req.candidate.username }}
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+                                <td>
+                                    {{ req.candidate.email }}
+                                </td>
+
+                                <td>
+                                    {{ req.job.job_title }}
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ★
+                    </div>
+
+                    <h3>No shortlisted candidates</h3>
+
+                    <p>
+                        Candidates shortlisted for your vacancies will appear here.
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ================= SELECTED TAB ================= -->
+
+            <div class="tab-content" id="selected">
+
+                {% if selected_candidates %}
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Candidate</th>
+                                <th>Job</th>
+                                <th>Resume</th>
+                                <th>Applied On</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for app in selected_candidates %}
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="candidate-info">
+
+                                        <div class="candidate-avatar selected-avatar">
+                                            {{ app.candidate.username|first|upper }}
+                                        </div>
+
+                                        <span>
+                                            {{ app.candidate.username }}
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+                                <td>
+                                    {{ app.job.job_title }}
+                                </td>
+
+                                <td>
+
+                                    <a href="{{ app.resume.url }}"
+                                       target="_blank"
+                                       class="resume-link">
+                                        View Resume →
+                                    </a>
+
+                                </td>
+
+                                <td>
+                                    {{ app.applied_at|date:"M d, Y" }}
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ✓
+                    </div>
+
+                    <h3>No selected candidates yet</h3>
+
+                    <p>
+                        Candidates you select for your vacancies will appear here.
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ================= REJECTED TAB ================= -->
+
+            <div class="tab-content" id="rejected">
+
+                {% if rejected_candidates %}
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Candidate</th>
+                                <th>Job</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for app in rejected_candidates %}
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="candidate-info">
+
+                                        <div class="candidate-avatar rejected-avatar">
+                                            {{ app.candidate.username|first|upper }}
+                                        </div>
+
+                                        <span>
+                                            {{ app.candidate.username }}
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+                                <td>
+                                    {{ app.job.job_title }}
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        —
+                    </div>
+
+                    <h3>No rejected candidates</h3>
+
+                    <p>
+                        Rejected applications will appear here.
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= TAB JAVASCRIPT ================= -->
+
+    <script>
+
+        const tabs = document.querySelectorAll(".tab");
+        const contents = document.querySelectorAll(".tab-content");
+
+        tabs.forEach(tab => {
+
+            tab.addEventListener("click", () => {
+
+                tabs.forEach(t => {
+                    t.classList.remove("active");
+                });
+
+                contents.forEach(content => {
+                    content.classList.remove("active");
+                });
+
+                tab.classList.add("active");
+
+                const target = tab.dataset.tab;
+
+                document
+                    .getElementById(target)
+                    .classList.add("active");
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>

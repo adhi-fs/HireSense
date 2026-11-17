@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Job</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .view-card {
+            max-width: 700px;
+            margin: 60px auto;
+            border-radius: 12px;
+        }
+
+        .card-header {
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .label-title {
+            font-weight: 600;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card shadow view-card">
+
+        <!-- Header -->
+        <div class="card-header bg-primary text-white text-center">
+            Job Details
+        </div>
+
+        <!-- Body -->
+        <div class="card-body">
+
+            <div class="mb-3">
+                <div class="label-title">Job Title</div>
+                <div class="fs-5 fw-bold">{{ job.job_title }}</div>
+            </div>
+
+            <div class="mb-3">
+                <div class="label-title">Role</div>
+                <div>{{ job.job_role }}</div>
+            </div>
+
+            <div class="mb-3">
+                <div class="label-title">Location</div>
+                <div>{{ job.job_location }}</div>
+            </div>
+
+            <div class="mb-3">
+                <div class="label-title">Salary</div>
+                <div>{{ job.job_salary }}</div>
+            </div>
+
+            <div class="mb-3">
+                <div class="label-title">Status</div>
+                <div>{{ job.job_status }}</div>
+            </div>
+
+            <div class="mb-4">
+                <div class="label-title">Description</div>
+                <div class="border rounded p-3 bg-light">
+                    {{ job.job_description }}
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="{% url 'admin_jobs' %}" class="btn btn-secondary">
+                    Back to Jobs
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

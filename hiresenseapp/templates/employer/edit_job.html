@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Job</title>
+    <link rel="stylesheet" href="{% static 'styles/auth.css' %}">
+</head>
+<body>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Edit Job Vacancy</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Job Title</label>
+                <input type="text" name="job_title" value="{{ job.job_title }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Role</label>
+                <input type="text" name="job_role" value="{{ job.job_role }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" name="job_location" value="{{ job.job_location }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Salary</label>
+                <input type="text" name="job_salary" value="{{ job.job_salary }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="job_description" required>{{ job.job_description }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Status</label>
+                <select name="job_status">
+                    <option value="open" {% if job.job_status == "open" %}selected{% endif %}>Open</option>
+                    <option value="closed" {% if job.job_status == "closed" %}selected{% endif %}>Closed</option>
+                    <option value="draft" {% if job.job_status == "draft" %}selected{% endif %}>Draft</option>
+                    <option value="pending" {% if job.job_status == "pending" %}selected{% endif %}>Pending</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-primary full-btn">
+                Update Job
+            </button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

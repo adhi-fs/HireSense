@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mock Interview Feedback</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fc;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1cc88a, #4e73df);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .score.good {
+            color: #1cc88a;
+        }
+
+        .score.average {
+            color: #f6c23e;
+        }
+
+        .score.poor {
+            color: #e74a3b;
+        }
+
+        .feedback-text {
+            margin-top: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .suggestions {
+            text-align: left;
+            margin-top: 30px;
+        }
+
+        .suggestions h3 {
+            color: #4e73df;
+        }
+
+        .suggestions ul {
+            padding-left: 20px;
+        }
+
+        .btn-dashboard {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: #4e73df;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .btn-dashboard:hover {
+            background: #2e59d9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    Mock Interview Feedback
+</div>
+
+<div class="container">
+    <div class="card">
+
+        <h2>Your Final Score</h2>
+
+        <div class="score 
+            {% if score >= 75 %}
+                good
+            {% elif score >= 50 %}
+                average
+            {% else %}
+                poor
+            {% endif %}
+        ">
+            {{ score }} / 100
+        </div>
+
+        <div class="feedback-text">
+            {% if score >= 75 %}
+                Excellent performance! You demonstrated strong understanding and clear communication.
+            {% elif score >= 50 %}
+                Good attempt! There is room for improvement in depth and clarity of answers.
+            {% else %}
+                Keep practicing. Try to structure your answers better and include more relevant keywords.
+            {% endif %}
+        </div>
+
+        <div class="suggestions">
+            <h3>Suggestions to Improve</h3>
+            <ul>
+                <li>Practice structured answering (STAR method).</li>
+                <li>Include more technical keywords relevant to the role.</li>
+                <li>Improve clarity and explanation depth.</li>
+                <li>Revise core concepts related to selected job role.</li>
+                <li>Take more mock interviews to build confidence.</li>
+            </ul>
+        </div>
+
+        <a href="{% url 'candidate_dashboard' %}" class="btn-dashboard">
+            Back to Dashboard
+        </a>
+
+    </div>
+</div>
+
+</body>
+</html>
